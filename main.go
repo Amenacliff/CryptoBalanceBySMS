@@ -17,8 +17,13 @@ func main() {
 		log.Println("An Error Occurred when getting Port", errGetPort.Error())
 	}
 	mux := http.NewServeMux()
+	log.Println("Server Running at", port)
 
 	routes.SetUpRoutes(mux, envUtil)
+	err := http.ListenAndServe(port, mux)
 
-	http.ListenAndServe(port, mux)
+	if err != nil {
+		log.Println(err.Error())
+		return
+	}
 }
